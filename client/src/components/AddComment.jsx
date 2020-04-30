@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Link, Route, Redirect } from 'react-router-dom';
 
 // Component for adding a new comment
 class AddComment extends Component {
@@ -7,7 +8,8 @@ class AddComment extends Component {
         this.state = {
             commentUser: "",
             commentTitle: "",
-            commentBody: ""
+            commentBody: "",
+            redirect: false
         }
     }
 
@@ -36,7 +38,7 @@ class AddComment extends Component {
                 'Content-Type': 'application/json',
                 'Authorization': this.props.token
             },
-            body:JSON.stringify(formSubmission)
+            body: JSON.stringify(formSubmission)
         });
         // extract json 
         let json = await response.json();
@@ -45,27 +47,38 @@ class AddComment extends Component {
         if (json.error) {
             window.alert(json.error);
         } // TODO: If add successful, redirect to their comments page
-        else
-        {
+        else {
             console.log(`NEW COMMENT: ${JSON.stringify(json)}`);
+            // set redirect flag to fwd us to next page
+            this.setState({ redirect: true });
         }
 
     };
 
     // Actually render the Add comment form state controlled component
     render() {
-        return (
-            <Fragment>
-            <h3>Add a New Comment</h3>
-            <form>
-                <label htmlFor="commentTitle">Title</label>
-                <input type="text" name="commentTitle" id="commentTitle" value={this.state.commentTitle} onChange={this.handleChange} />
-                <label htmlFor="commentBody">Body</label>
-                <input type="text" name="commentBody" id="commentBody" value={this.state.commentBody} onChange={this.handleChange} />
-                <button onClick={this.handleSubmission}>Add Comment</button>
-            </form>
-        </Fragment>
-        );
+        // Conditional render redirect to user comments page or display the Login form
+        if (this.state.redirect) {
+            console.log(`Redirecting...`);
+            return (<Redirect to='/comments' />);
+        } else {
+            return (
+                <Fragment>
+                    <h3>Add a New Comment</h3>
+                    <form>
+                        <div className="form-group">
+                            <label htmlFor="commentTitle">Title&nbsp;</label>
+                            <input type="text" name="commentTitle" id="commentTitle" value={this.state.commentTitle} onChange={this.handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="commentBody">Body&nbsp;</label>
+                            <input type="text" name="commentBody" id="commentBody" value={this.state.commentBody} onChange={this.handleChange} />
+                        </div>
+                        <button onClick={this.handleSubmission}>Add Comment</button>
+                    </form>
+                </Fragment>
+            );
+        }
     }
 }
 

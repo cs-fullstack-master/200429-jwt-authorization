@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Link, Route, Redirect } from 'react-router-dom';
 
 class Register extends Component {
     constructor(props) {
@@ -6,7 +7,8 @@ class Register extends Component {
         this.state = {
             name: "",
             password: "",
-            email: ""
+            email: "",
+            redirect: false
         }
     }
 
@@ -45,25 +47,39 @@ class Register extends Component {
         }
         else {
             console.log(`REGISTRATION RESPONSE: ${JSON.stringify(json)}`);  // Check the response
+            // set redirect flag to fwd us to next page
+            this.setState({ redirect: true });
         }
     }
 
     // Actually render the registration form state controlled component
     render() {
-        return (
-            <Fragment>
-                <h3>Register!</h3>
-                <form>
-                    <label htmlFor="email">Email</label>
-                    <input type="text" name="email" id="email" value={this.state.email} onChange={this.handleChange} />
-                    <label htmlFor="name">Name</label>
-                    <input type="text" name="name" id="name" value={this.state.name} onChange={this.handleChange} />
-                    <label htmlFor="email">Password</label>
-                    <input type="password" name="password" id="password" value={this.state.password} onChange={this.handleChange} />
-                    <button onClick={this.handleSubmission}>Register</button>
-                </form>
-            </Fragment>
-        );
+        // Conditional render redirect to user comments page or display the Login form
+        if (this.state.redirect) {
+            console.log(`Redirecting...`);
+            return (<Redirect to='/' />);
+        } else {
+            return (
+                <Fragment>
+                    <h3>Register!</h3>
+                    <form>
+                        <div className="form-group">
+                            <label htmlFor="email">Email&nbsp;</label>
+                            <input type="text" name="email" id="email" value={this.state.email} onChange={this.handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="name">Name&nbsp;</label>
+                            <input type="text" name="name" id="name" value={this.state.name} onChange={this.handleChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Password&nbsp;</label>
+                            <input type="password" name="password" id="password" value={this.state.password} onChange={this.handleChange} />
+                        </div>
+                        <button className="btn btn-primary" onClick={this.handleSubmission}>Register</button>
+                    </form>
+                </Fragment>
+            );
+        }
     }
 }
 

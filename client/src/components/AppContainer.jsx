@@ -46,29 +46,66 @@ class AppContainer extends Component {
 
     }
 
+    // Logout the user by removing the token/user info from state
+    logOutUser = () => {
+        console.log(`Logout/Free token`);
+        this.setState({ token: "", tokenUser: {} });
+        window.alert(`You Have Been Logged Out`);
+    };
+
     // Actually render the parent container containing wired child components
     // top container
     render() {
-        return (
-            <div>
-                <h1>Comment Manager</h1>
-                <h4>Welcome {this.state.tokenUser.name}</h4>
-                <h4>{this.state.tokenUser.email}</h4>
-                <Router>
-                    <Link to="/">Home</Link> |
-                    <Link to="/login">Login</Link> |
-                    <Link to="/logout">Logout</Link> |
-                    <Link to="/register">Register</Link> |
-                    <Link to="/comments">Your Comments</Link> |
-                    <Link to="/add">Add Comment</Link>
-                    {/* setup our routes */}
-                    <Route path="/login" component={() => <Login logInUser={this.logInUser} />} />
-                    <Route path="/register" component={() => <Register />} />
-                    <Route path="/add" component={() => <AddComment token={this.state.token} tokenUser={this.state.tokenUser} />} />
-                    <Route path="/comments" component={() => <ReadComments token={this.state.token} />} />
-                </Router>
-            </div>
-        );
+        // We need to render different navbar options depending on if user signed in or not
+        if (this.state.token) { // User LOGGED IN
+            return (
+                <div>
+                    <h1>Comment Manager</h1>
+                    <h5>Welcome {this.state.tokenUser.name}</h5>
+                    {/* Could display other info from current token payload */}
+                    {/* <h6>{this.state.tokenUser.email}</h6> */}
+                    <Router>
+                        <hr />
+                        <Link to="/">Home</Link>&nbsp;|&nbsp;
+                    {/* <Link to="/login">Login</Link>&nbsp;|&nbsp; */}
+                    <Link to="/logout" onClick={this.logOutUser}>Logout</Link>&nbsp;|&nbsp;
+                    {/* <Link to="/register">Register</Link>&nbsp;|&nbsp; */}
+                    <Link to="/comments">Your Comments</Link>&nbsp;|&nbsp;
+                    <Link to="/add">Add Comment</Link>&nbsp;|&nbsp;
+                    <hr />
+                        {/* setup our routes */}
+                        {/* <Route path="/login" component={() => <Login logInUser={this.logInUser} />} /> */}
+                        {/* <Route path="/register" component={() => <Register />} /> */}
+                        <Route path="/add" component={() => <AddComment token={this.state.token} tokenUser={this.state.tokenUser} />} />
+                        <Route path="/comments" component={() => <ReadComments token={this.state.token} />} />
+                    </Router>
+                </div>
+            );
+        } else { // User LOGGED OUT
+            return (
+                <div>
+                    <h1>Comment Manager</h1>
+                    <h5>Welcome!</h5>
+                    <h4>{this.state.tokenUser.email}</h4>
+                    <Router>
+                        <hr />
+                        <Link to="/">Home</Link>&nbsp;|&nbsp;
+                        <Link to="/login">Login</Link>&nbsp;|&nbsp;
+                        {/* <Link to="/logout" onClick={this.logOutUser}>Logout</Link>&nbsp;|&nbsp; */}
+                        <Link to="/register">Register</Link>&nbsp;|&nbsp;
+                        {/* <Link to="/comments">Your Comments</Link>&nbsp;|&nbsp; */}
+                        {/* <Link to="/add">Add Comment</Link>&nbsp;|&nbsp; */}
+                        <hr />
+                        {/* setup our routes */}
+                        <Route path="/login" component={() => <Login logInUser={this.logInUser} />} />
+                        <Route path="/register" component={() => <Register />} />
+                        {/* <Route path="/add" component={() => <AddComment token={this.state.token} tokenUser={this.state.tokenUser} />} /> */}
+                        {/* <Route path="/comments" component={() => <ReadComments token={this.state.token} />} /> */}
+                    </Router>
+                </div>
+            );
+        }
+
     }
 }
 

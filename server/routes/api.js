@@ -116,7 +116,7 @@ router.get('/comment', authenticateToken, (req, res) => {
         {commentUser : req.user.email}, (error, result) => {
             error ? res.send(error) : res.send(result)
         }
-    );
+    ).sort({date:-1}); // sort in descending order (newest first)
 });
 
 // create a comment
