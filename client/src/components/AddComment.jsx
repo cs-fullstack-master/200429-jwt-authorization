@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 
+// Component for adding a new comment
 class AddComment extends Component {
     constructor(props) {
         super(props);
@@ -51,7 +52,7 @@ class AddComment extends Component {
 
     };
 
-    // 
+    // Actually render the Add comment form state controlled component
     render() {
         return (
             <Fragment>

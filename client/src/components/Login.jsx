@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 
+// Login form component
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -46,7 +47,7 @@ class Login extends Component {
         }
     }
 
-    // actually render content
+    // Actually render the login form
     render() {
         return (
             <Fragment>

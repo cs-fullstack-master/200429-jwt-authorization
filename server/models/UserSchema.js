@@ -1,6 +1,7 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
-// Define the UserSchema
+
+// Define the UserSchema for users of system
 let UserSchema = new Schema (
     {
         name: {type: String, required: true},

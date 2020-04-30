@@ -13,7 +13,7 @@ class Register extends Component {
     // Handle changes to form fields
     handleChange = (evt) => {
         this.setState({ [evt.target.id]: evt.target.value });
-        // console.log(`Changed: ${evt.target.id} ${evt.target.value}`);
+        // console.log(`Changed: ${evt.target.id} ${evt.target.value}`); //sanity
     };
 
 
@@ -46,14 +46,9 @@ class Register extends Component {
         else {
             console.log(`REGISTRATION RESPONSE: ${JSON.stringify(json)}`);  // Check the response
         }
-
-
-
     }
 
-
-
-
+    // Actually render the registration form state controlled component
     render() {
         return (
             <Fragment>

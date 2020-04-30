@@ -5,7 +5,7 @@ import ReadComments from "./ReadComments";
 import AddComment from "./AddComment";
 import Register from "./Register";
 
-// Top level container
+// Top level container for application
 class AppContainer extends Component {
     constructor(props) {
         super(props);
@@ -46,7 +46,8 @@ class AppContainer extends Component {
 
     }
 
-    // actually render content
+    // Actually render the parent container containing wired child components
+    // top container
     render() {
         return (
             <div>
@@ -60,7 +61,7 @@ class AppContainer extends Component {
                     <Link to="/register">Register</Link> |
                     <Link to="/comments">Your Comments</Link> |
                     <Link to="/add">Add Comment</Link>
-                    {/* setup ours routes */}
+                    {/* setup our routes */}
                     <Route path="/login" component={() => <Login logInUser={this.logInUser} />} />
                     <Route path="/register" component={() => <Register />} />
                     <Route path="/add" component={() => <AddComment token={this.state.token} tokenUser={this.state.tokenUser} />} />

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 
+// component to display a list of comments
 class ReadComments extends Component {
     constructor(props) {
         super(props);
@@ -34,6 +35,7 @@ class ReadComments extends Component {
         }
     }
 
+    // Actually render the filtered list of comments
     render() {
             return( 
             <div>
